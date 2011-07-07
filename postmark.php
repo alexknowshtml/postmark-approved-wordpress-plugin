@@ -140,9 +140,11 @@ if(get_option('postmark_enabled') == 1){
 			    $email['Subject'] = $subject;
 			    $email['TextBody'] = $message;
 	            
-	            pm_send_mail($postmark_headers, $email);
+	            $response =pm_send_mail($postmark_headers, $email);
 			}
 		}
+		
+		return $response;
 	}
 }
 
@@ -183,7 +185,13 @@ function pm_send_mail($headers, $email){
             CURLOPT_RETURNTRANSFER => true
     ));
     
-    return curl_exec($curl);
+    $response = curl_exec($curl);
+    
+    if ($response === false){
+    	return false;
+    } else {
+    	return true;
+    }
 }
 
 ?>
