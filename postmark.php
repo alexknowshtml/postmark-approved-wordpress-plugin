@@ -101,7 +101,7 @@ function pm_admin_options() {
 
 add_action('wp_ajax_pm_admin_test', 'pm_admin_test_ajax');
 function pm_admin_test_ajax() {
-	$response = wp_mail(get_option('postmark_sender_address'),''.get_bloginfo('name').' Postmark Test','This is a test email sent via Postmark from '.get_bloginfo('name').'.');
+	$response = pm_send_test();
 
 	echo $response;
 	
@@ -116,7 +116,7 @@ function pm_admin_test_ajax() {
 // Override wp_mail() if postmark enabled
 if(get_option('postmark_enabled') == 1){
 	if (!function_exists("wp_mail")){
-		function wp_mail( $to, $subject, $message, $headers = '', $attachments = array() ) {
+		function wp_mail( $to, $subject, $message, $headers = '', $attachments = array()) {
 			// Define Headers
 			$postmark_headers = array(
 				'Accept: application/json',
@@ -129,33 +129,61 @@ if(get_option('postmark_enabled') == 1){
 					
 			}
 			
-			// Construct Message
-			$email = array();
-			$email['To'] = $to;
-			$email['From'] = get_option('postmark_sender_address');
-		    $email['Subject'] = $subject;
-		    $email['TextBody'] = $message;
-		    
-		    $curl = curl_init();
-            curl_setopt_array($curl, array(
-                    CURLOPT_URL => POSTMARK_ENDPOINT,
-                    CURLOPT_POST => true,
-                    CURLOPT_HTTPHEADER => $postmark_headers,
-                    CURLOPT_POSTFIELDS => json_encode($email),
-                    CURLOPT_RETURNTRANSFER => true
-            ));
-            
-            $response = curl_exec($curl);
-            
-            if ($response === false){
-            	return "Test Failed with Error ".curl_error($curl);
-            } else {
-            	return "Test Sent";
-           	}
-           	
-            die();
+			// Send Email
+			$recipients = explode(",", $to);
+			
+			foreach($recipients as $recipient){
+				// Construct Message
+				$email = array();
+				$email['To'] = $to;
+				$email['From'] = get_option('postmark_sender_address');
+			    $email['Subject'] = $subject;
+			    $email['TextBody'] = $message;
+	            
+	            pm_send_mail($postmark_headers, $email);
+			}
 		}
 	}
+}
+
+
+function pm_send_test(){
+	// Define Headers
+	$postmark_headers = array(
+		'Accept: application/json',
+        'Content-Type: application/json',
+        'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
+	);
+	
+	$email = array();
+	$email['To'] = get_option('postmark_sender_address');
+	$email['From'] = get_option('postmark_sender_address');
+    $email['Subject'] = get_bloginfo('name').' Postmark Test';
+    $email['TextBody'] = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
+    
+    $response = pm_send_mail($postmark_headers, $email);      
+    
+    if ($response === false){
+    	return "Test Failed with Error ".curl_error($curl);
+    } else {
+    	return "Test Sent";
+   	}
+   	
+    die();
+}
+
+
+function pm_send_mail($headers, $email){
+	$curl = curl_init();
+    curl_setopt_array($curl, array(
+            CURLOPT_URL => POSTMARK_ENDPOINT,
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => $headers,
+            CURLOPT_POSTFIELDS => json_encode($email),
+            CURLOPT_RETURNTRANSFER => true
+    ));
+    
+    return curl_exec($curl);
 }
 
 ?>
