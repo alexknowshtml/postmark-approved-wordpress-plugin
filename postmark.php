@@ -140,11 +140,10 @@ if(get_option('postmark_enabled') == 1){
 			    $email['Subject'] = $subject;
 			    $email['TextBody'] = $message;
 	            
-	            $response =pm_send_mail($postmark_headers, $email);
+	            $response = pm_send_mail($postmark_headers, $email);
 			}
+			return $response;
 		}
-		
-		return $response;
 	}
 }
 
