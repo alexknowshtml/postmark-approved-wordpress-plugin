@@ -22,6 +22,21 @@ function pm_admin_menu() {
 	add_options_page('Postmark', 'Postmark', 'manage_options', 'pm_admin', 'pm_admin_options');
 }
 
+function pm_admin_action_links($links, $file) {
+    static $pm_plugin;
+    if (!$pm_plugin) {
+        $pm_plugin = plugin_basename(__FILE__);
+    }
+    if ($file == $pm_plugin) {
+        $settings_link = '<a href="options-general.php?page=pm_admin">Settings</a>';
+        array_unshift($links, $settings_link);
+    }
+    return $links;
+}
+
+add_filter('plugin_action_links', 'pm_admin_action_links', 10, 2);
+
+
 function pm_admin_options() {
 	if($_POST['submit']) {
 		$pm_enabled = $_POST['pm_enabled'];
