@@ -60,11 +60,14 @@ function pm_admin_options() {
 	<script type="text/javascript" >
 	jQuery(document).ready(function($) {
 		
-		$(".pm_admin_test").click(function(e){
+		$("#test-form").submit(function(e){
 			e.preventDefault();
-			var $this = $(this).text("Loading...");
-			$.post(ajaxurl, {action:$this.attr("rel")}, function(data){
-				$this.text(data);
+			var $this = $(this);
+			var send_to = $('#pm_test_address').val();
+			
+			$("#test-form .button-primary").val("Sending…");
+			$.post(ajaxurl, {email: send_to, action:$this.attr("action")}, function(data){
+				$("#test-form .button-primary").val(data);
 			});
 		});
 		
@@ -104,7 +107,21 @@ function pm_admin_options() {
 		
 		
 		<h3>Test Postmark</h3>
-		<p><a href="?page=pm_admin" class="button-primary pm_admin_test" rel="pm_admin_test">Send Test Email</a></p>
+		<form method="post" id="test-form" action="pm_admin_test">
+			<table class="form-table">
+			<tbody>
+				<tr>
+					<th><label for="pm_test_address">Send Test To</label></th>
+					<td> <input name="pm_test_address" id="pm_test_address" type="text" value="<?php echo get_option('postmark_sender_address'); ?>" class="regular-text"/></td>
+				</tr>
+			</tbody>
+			</table>
+			<div class="submit">
+				<input type="submit" name="submit" value="Send Test Email" class="button-primary" />
+			</div>
+		</form>
+		
+		<!--<p><a href="?page=pm_admin" class="button-primary pm_admin_test" rel="pm_admin_test">Send Test Email</a></p>-->
 		
 		
 		<p style="margin-top:40px; padding-top:10px; border-top:1px solid #ddd;">This plugin is brought to you by <a href="http://www.postmarkapp.com">Postmark</a> &amp; <a href="http://www.andydev.co.uk/">Andrew Yates</a>.</p>
@@ -164,6 +181,8 @@ if(get_option('postmark_enabled') == 1){
 
 
 function pm_send_test(){
+	$email_address = $_POST['email'];
+
 	// Define Headers
 	$postmark_headers = array(
 		'Accept: application/json',
@@ -172,7 +191,7 @@ function pm_send_test(){
 	);
 	
 	$email = array();
-	$email['To'] = get_option('postmark_sender_address');
+	$email['To'] = $email_address;
 	$email['From'] = get_option('postmark_sender_address');
     $email['Subject'] = get_bloginfo('name').' Postmark Test';
     $email['TextBody'] = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
