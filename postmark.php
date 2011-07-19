@@ -96,7 +96,7 @@ function pm_admin_options() {
 				</tr>
 				<tr>
 					<th><label for="pm_sender_address">Sender Email Address</label></th>
-					<td> <input name="pm_sender_address" id="" type="text" value="<?php echo get_option('postmark_sender_address'); ?>" class="regular-text"/></td>
+					<td><input name="pm_sender_address" id="" type="text" value="<?php echo get_option('postmark_sender_address'); ?>" class="regular-text"/> <span>Needs to be a verified sender signature.</span></td>
 				</tr>
 			</tbody>
 			</table>
