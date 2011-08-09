@@ -80,9 +80,11 @@ function pm_admin_options() {
 		<div id="icon-tools" class="icon32"></div>
 		<h2><img src="<?php echo WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) ?>images/PM-Logo.jpg" /></h2>
     <h3>What is Postmark?</h3>
-		<p>This official Postmark plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance. </p>
+		<p>This official Postmark plugin enables WordPress blogs of any size to deliver and track WordPress notification emails reliably, with minimal setup time and zero maintenance. </p>
 		<p>If you don't already have a free Postmark account, <a href="https://postmarkapp.com/sign_up">you can get one in minutes</a>. Every account comes with 1000 free sends.</p>
-
+		
+		<br />
+		
 		<h3>Your Postmark Settings</h3>
 		<form method="post" action="options-general.php?page=pm_admin">
 			<table class="form-table">
@@ -104,7 +106,8 @@ function pm_admin_options() {
 				<input type="submit" name="submit" value="Save" class="button-primary" />
 			</div>
 		</form>
-
+		
+		<br />
 
 		<h3>Test Postmark Sending</h3>
 		<form method="post" id="test-form" action="pm_admin_test">
