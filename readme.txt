@@ -1,15 +1,15 @@
-=== Postmark Official Wordpress Plugin ===
+=== Postmark Approved Wordpress Plugin ===
 Contributors: andy7629, alexknowshtml
 Tags: postmark, email, smtp, notifications, wp_mail, wildbit
 Requires at least: 3.2
 Tested up to: 3.2
 Stable tag: trunk
 
-This Official Postmark Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance.
+This Postmark Approved Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance.
 
 == Description ==
 
-This Official Postmark Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance. No more SMTP errors or delivery problems with Postmark! 
+This Postmark Approved Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance. No more SMTP errors or delivery problems with Postmark!
 
 If you don't already have a free Postmark account, you can get one in minutes. Every account comes with 1000 free sends.
 
@@ -29,15 +29,15 @@ Postmark is a hosted service that expertly handles all delivery of transactional
 
 = Will this plugin work with my Wordpress site? =
 
-The official Postmark Wordpress plugin overrides any usage of the wp_mail() function. Because of this, if any 3rd party code or plugins send mail directly using the PHP mail function, or any other method, we cannot override it. Please contact the makers of any offending plugins and let them know that they should use wp_mail() instead of unsupported mailing funcitons.
+The Postmark Approved Wordpress plugin overrides any usage of the wp_mail() function. Because of this, if any 3rd party code or plugins send mail directly using the PHP mail function, or any other method, we cannot override it. Please contact the makers of any offending plugins and let them know that they should use wp_mail() instead of unsupported mailing funcitons.
 
 = Does this cost me money? =
 
-This Postmark plugin is 100% free. All new Postmark accounts include 1000 free email sends. Beyond your first 1000 email sends, they will cost only $1.50 per 1000 sends with no monthly commitments and no expirations. 
+This Postmark plugin is 100% free. All new Postmark accounts include 1000 free email sends. Beyond your first 1000 email sends, they will cost only $1.50 per 1000 sends with no monthly commitments and no expirations.
 
-We will send you multiple warnings as you approach running out of send credits, so you don't need to worry about paying for credits until you absolutely need them. 
+We will send you multiple warnings as you approach running out of send credits, so you don't need to worry about paying for credits until you absolutely need them.
 
-Sign up for your free Postmark account at http://postmarkapp.com and get started now. 
+Sign up for your free Postmark account at http://postmarkapp.com and get started now.
 
 = My emails are still not sending, or they are going to spam! HELP!? =
 
