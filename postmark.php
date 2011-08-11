@@ -111,7 +111,7 @@ function pm_admin_options() {
 				</tr>
 				<tr>
 					<th><label for="pm_poweredby">Support Postmark</label></th>
-					<td><input name="pm_poweredby" id="" type="checkbox" value="1"<?php if(get_option('postmark_poweredby') == 1): echo ' checked="checked"'; endif; ?>/> <span style="font-size:11px;">Adds a credit to Postmark at the bottom of plain text emails.</span></td>
+					<td><input name="pm_poweredby" id="" type="checkbox" value="1"<?php if(get_option('postmark_poweredby') == 1): echo ' checked="checked"'; endif; ?>/> <span style="font-size:11px;">Adds a credit to Postmark at the bottom of emails.</span></td>
 				</tr>
 			</tbody>
 			</table>
@@ -171,7 +171,11 @@ if(get_option('postmark_enabled') == 1){
 
 			// Add wp_mail headers
 			if($headers){
-
+			
+			}
+			
+			if(get_option('postmark_poweredby') == 1){
+				$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
 			}
 
 			// Send Email
@@ -182,10 +186,10 @@ if(get_option('postmark_enabled') == 1){
 				$email = array();
 				$email['To'] = $to;
 				$email['From'] = get_option('postmark_sender_address');
-		    $email['Subject'] = $subject;
-		    $email['TextBody'] = $message;
+		    	$email['Subject'] = $subject;
+		    	$email['TextBody'] = $message;
 
-        $response = pm_send_mail($postmark_headers, $email);
+        		$response = pm_send_mail($postmark_headers, $email);
 			}
 			return $response;
 		}
@@ -202,12 +206,18 @@ function pm_send_test(){
         'Content-Type: application/json',
         'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
 	);
-
+	
+	$message = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
+	
+	if(get_option('postmark_poweredby') == 1){
+		$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
+	}
+	
 	$email = array();
 	$email['To'] = $email_address;
 	$email['From'] = get_option('postmark_sender_address');
     $email['Subject'] = get_bloginfo('name').' Postmark Test';
-    $email['TextBody'] = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
+    $email['TextBody'] = $message;
 
     $response = pm_send_mail($postmark_headers, $email);
 

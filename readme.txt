@@ -58,7 +58,7 @@ Most importantly, a great product requires great support and even better educati
 == Changelog ==
 
 = v1.0.1 =
-You can now optionally support Postmark by adding a credit to the bottom of plain text emails.
+You can now optionally support Postmark by adding a credit to the bottom of emails.
 
 = v1.0.0 =
 First Public release.
