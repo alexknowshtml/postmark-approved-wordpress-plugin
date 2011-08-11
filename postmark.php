@@ -1,13 +1,13 @@
 <?php
 /*
-Plugin Name: Postmark
+Plugin Name: Postmark Approved Wordpress Plugin
 Plugin URI: http://www.andydev.co.uk
-Description: Overwrites wp_mail to send emails through Postmark
+Description: Overwrites wp_mail to send emails through Postmark.
 Author: Andrew Yates
-Version: 1.0.0
+Version: 1.0.1
 Author URI: http://www.andydev.co.uk
 Created: 2011-07-05
-Modified: 2011-07-05
+Modified: 2011-08-11
 */
 
 // Define
@@ -46,10 +46,18 @@ function pm_admin_options() {
 
 		$api_key = $_POST['pm_api_key'];
 		$sender_email = $_POST['pm_sender_address'];
+		
+		$pm_poweredby = $_POST['pm_poweredby'];
+		if($pm_poweredby):
+			$pm_poweredby = 1;
+		else:
+			$pm_poweredby = 0;
+		endif;
 
 		update_option('postmark_enabled', $pm_enabled);
 		update_option('postmark_api_key', $api_key);
 		update_option('postmark_sender_address', $sender_email);
+		update_option('postmark_poweredby', $pm_poweredby);
 
 		$msg_updated = "Postmark settings have been saved.";
 	}
@@ -90,7 +98,8 @@ function pm_admin_options() {
 			<table class="form-table">
 			<tbody>
 				<tr>
-					<th><input name="pm_enabled" id="" type="checkbox" value="1"<?php if(get_option('postmark_enabled') == 1): echo ' checked="checked"'; endif; ?>/><label for="pm_enabled" style="margin-left:5px;">Send using Postmark</small></label></th>
+					<th><label for="pm_enabled">Send using Postmark</label></th>
+					<td><input name="pm_enabled" id="" type="checkbox" value="1"<?php if(get_option('postmark_enabled') == 1): echo ' checked="checked"'; endif; ?>/> <span style="font-size:11px;">Sends emails sent using wp_mail via Postmark.</span></td>
 				</tr>
 				<tr>
 					<th><label for="pm_api_key">Postmark API Key</label></th>
@@ -99,6 +108,10 @@ function pm_admin_options() {
 				<tr>
 					<th><label for="pm_sender_address">Sender Email Address</label></th>
 					<td><input name="pm_sender_address" id="" type="text" value="<?php echo get_option('postmark_sender_address'); ?>" class="regular-text"/> <br/><span style="font-size:11px;">This email needs to be one of your <strong>verified sender signatures</strong>. <br/>It will appear as the "from" email on all outbound messages. <a href="https://postmarkapp.com/signatures">Set one up in Postmark</a>.</span></td>
+				</tr>
+				<tr>
+					<th><label for="pm_poweredby">Support Postmark</label></th>
+					<td><input name="pm_poweredby" id="" type="checkbox" value="1"<?php if(get_option('postmark_poweredby') == 1): echo ' checked="checked"'; endif; ?>/> <span style="font-size:11px;">Adds a credit to Postmark at the bottom of plain text emails.</span></td>
 				</tr>
 			</tbody>
 			</table>
