@@ -1,15 +1,15 @@
-=== Postmark Approved Wordpress Plugin ===
+=== Postmark Approved WordPress Plugin ===
 Contributors: andy7629, alexknowshtml
 Tags: postmark, email, smtp, notifications, wp_mail, wildbit
 Requires at least: 3.2
 Tested up to: 3.2
 Stable tag: trunk
 
-If you're still sending email with default SMTP, you're blind to delivery problems! This Postmark Approved Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance.
+If you're still sending email with default SMTP, you're blind to delivery problems! This Postmark Approved WordPress Plugin enables WordPress blogs of any size to deliver and track WordPress notification emails reliably, with minimal setup time and zero maintenance.
 
 == Description ==
 
-If you're still sending email with default SMTP, you're blind to delivery problems! This Postmark Approved Wordpress Plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance. No more SMTP errors or delivery problems with Postmark!
+If you're still sending email with default SMTP, you're blind to delivery problems! This Postmark Approved WordPress Plugin enables WordPress blogs of any size to deliver and track WordPress notification emails reliably, with minimal setup time and zero maintenance. No more SMTP errors or delivery problems with Postmark!
 
 If you don't already have a free Postmark account, you can get one in minutes. Every account comes with 1000 free sends.
 
@@ -25,11 +25,11 @@ If you don't already have a free Postmark account, you can get one in minutes. E
 
 = What is Postmark? =
 
-Postmark is a hosted service that expertly handles all delivery of transactional webapp and web site email. This includes welcome emails, password resets, comment notifications, and more. If you've ever installed Wordpress and had issues with PHP's mail() function not working right, or your Wordpress install sends comment notifications or password resets to spam, Postmark makes all of these problems vanish in seconds. Without Postmark, you may not even know you're having delivery problems. Find out in seconds by installing and configuring this plugin.
+Postmark is a hosted service that expertly handles all delivery of transactional webapp and web site email. This includes welcome emails, password resets, comment notifications, and more. If you've ever installed WordPress and had issues with PHP's mail() function not working right, or your WordPress install sends comment notifications or password resets to spam, Postmark makes all of these problems vanish in seconds. Without Postmark, you may not even know you're having delivery problems. Find out in seconds by installing and configuring this plugin.
 
-= Will this plugin work with my Wordpress site? =
+= Will this plugin work with my WordPress site? =
 
-The Postmark Approved Wordpress plugin overrides any usage of the wp_mail() function. Because of this, if any 3rd party code or plugins send mail directly using the PHP mail function, or any other method, we cannot override it. Please contact the makers of any offending plugins and let them know that they should use wp_mail() instead of unsupported mailing funcitons.
+The Postmark Approved WordPress plugin overrides any usage of the wp_mail() function. Because of this, if any 3rd party code or plugins send mail directly using the PHP mail function, or any other method, we cannot override it. Please contact the makers of any offending plugins and let them know that they should use wp_mail() instead of unsupported mailing funcitons.
 
 = Does this cost me money? =
 

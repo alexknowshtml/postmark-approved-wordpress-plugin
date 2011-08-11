@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Postmark Approved Wordpress Plugin
+Plugin Name: Postmark Approved WordPress Plugin
 Plugin URI: http://www.andydev.co.uk
 Description: Overwrites wp_mail to send emails through Postmark.
 Author: Andrew Yates
@@ -88,7 +88,7 @@ function pm_admin_options() {
 		<div id="icon-tools" class="icon32"></div>
 		<h2><img src="<?php echo WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) ?>images/PM-Logo.jpg" /></h2>
     <h3>What is Postmark?</h3>
-		<p>This Postmark Approved plugin enables Wordpress blogs of any size to deliver and track Wordpress notification emails reliably, with minimal setup time and zero maintenance. </p>
+		<p>This Postmark Approved plugin enables WordPress blogs of any size to deliver and track WordPress notification emails reliably, with minimal setup time and zero maintenance. </p>
 		<p>If you don't already have a free Postmark account, <a href="https://postmarkapp.com/sign_up">you can get one in minutes</a>. Every account comes with 1000 free sends.</p>
 
 		<br />
