@@ -7,7 +7,7 @@ Author: Andrew Yates
 Version: 1.0.1
 Author URI: http://www.andydev.co.uk
 Created: 2011-07-05
-Modified: 2011-08-11
+Modified: 2011-08-13
 */
 
 // Define
@@ -174,8 +174,12 @@ if(get_option('postmark_enabled') == 1){
 			
 			}
 			
+			// If "Support Postmark" is on
 			if(get_option('postmark_poweredby') == 1){
-				$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
+				// Check Content Type 
+				if(!strpos($headers, "text/html")){
+					$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
+				}
 			}
 
 			// Send Email
@@ -188,6 +192,10 @@ if(get_option('postmark_enabled') == 1){
 				$email['From'] = get_option('postmark_sender_address');
 		    	$email['Subject'] = $subject;
 		    	$email['TextBody'] = $message;
+		    	
+		    	if(strpos($headers, "text/html")){
+			    	$email['HtmlBody'] = $message;
+		    	}
 
         		$response = pm_send_mail($postmark_headers, $email);
 			}
