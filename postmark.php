@@ -183,7 +183,9 @@ if(get_option('postmark_enabled') == 1){
 			}
 
 			// Send Email
-			$recipients = explode(",", $to);
+			if(!is_array($to)){
+				$recipients = explode(",", $to);	
+			}
 
 			foreach($recipients as $recipient){
 				// Construct Message
