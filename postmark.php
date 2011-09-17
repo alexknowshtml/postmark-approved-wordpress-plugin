@@ -162,17 +162,13 @@ function pm_admin_test_ajax() {
 if(get_option('postmark_enabled') == 1){
 	if (!function_exists("wp_mail")){
 		function wp_mail( $to, $subject, $message, $headers = '', $attachments = array()) {
+		
 			// Define Headers
 			$postmark_headers = array(
 				'Accept: application/json',
                 'Content-Type: application/json',
                 'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
 			);
-
-			// Add wp_mail headers
-			if($headers){
-			
-			}
 			
 			// If "Support Postmark" is on
 			if(get_option('postmark_poweredby') == 1){

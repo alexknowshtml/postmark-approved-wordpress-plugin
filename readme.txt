@@ -2,7 +2,7 @@
 Contributors: andy7629, alexknowshtml
 Tags: postmark, email, smtp, notifications, wp_mail, wildbit
 Requires at least: 3.2
-Tested up to: 3.2
+Tested up to: 3.2.1
 Stable tag: trunk
 
 If you're still sending email with default SMTP, you're blind to delivery problems! This Postmark Approved WordPress Plugin enables WordPress blogs of any size to deliver and track WordPress notification emails reliably, with minimal setup time and zero maintenance.
@@ -50,6 +50,10 @@ Because we've been in this business for many years. We’ve been running an emai
 We're hosted at Rackspace, where we’re able to offer both the physical (SAS70 data center) and environment security through a completely dedicated cluster of servers. Our servers utilize virtualization and high availability failover protection to properly handle outages and keep your data safe.
 
 Most importantly, a great product requires great support and even better education. Our team is spread out across six time zones to offer fast support on everything from using Postmark to best practices on content and user engagement. A solid infrastructure only goes so far, that’s why improving our customer’s sending practices helps achieve incredible results
+
+= Why aren't my HTML emails being sent? =
+
+This plugin detects HTML by checking the headers sent by other WordPress plugins. If a "text/html" content type isn't set then this plugin won't send the HTML to Postmark to be sent out only the plain text version of the email.
 
 == Screenshots ==
 
