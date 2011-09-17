@@ -177,16 +177,18 @@ if(get_option('postmark_enabled') == 1){
 					$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
 				}
 			}
-
+			
 			// Send Email
 			if(!is_array($to)){
-				$recipients = explode(",", $to);	
+				$recipients = implode(",", $to);	
+			} else {
+				$recipients = $to;
 			}
 
 			foreach($recipients as $recipient){
 				// Construct Message
 				$email = array();
-				$email['To'] = $to;
+				$email['To'] = $recipient;
 				$email['From'] = get_option('postmark_sender_address');
 		    	$email['Subject'] = $subject;
 		    	$email['TextBody'] = $message;
