@@ -61,6 +61,9 @@ This plugin detects HTML by checking the headers sent by other WordPress plugins
 
 == Changelog ==
 
+= v1.3 =
+* Resolved error with handing arrays of recipients
+
 = v1.2 =
 
 * Arrays of recipients are now properly handled

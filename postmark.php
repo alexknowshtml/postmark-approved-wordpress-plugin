@@ -4,10 +4,10 @@ Plugin Name: Postmark Approved WordPress Plugin
 Plugin URI: http://www.andydev.co.uk
 Description: Overwrites wp_mail to send emails through Postmark.
 Author: Andrew Yates
-Version: 1.0.1
+Version: 1.3
 Author URI: http://www.andydev.co.uk
 Created: 2011-07-05
-Modified: 2011-08-13
+Modified: 2011-09-20
 
 Copyright 2011  Andrew Yates & Postmarkapp.com
 
@@ -195,7 +195,7 @@ if(get_option('postmark_enabled') == 1){
 
 			// Send Email
 			if(!is_array($to)){
-				$recipients = implode(",", $to);
+				$recipients = explode(",", $to);
 			} else {
 				$recipients = $to;
 			}
