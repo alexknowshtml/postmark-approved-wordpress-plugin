@@ -68,9 +68,5 @@ This plugin detects HTML by checking the headers sent by other WordPress plugins
 * Optional "Powered by Postmark" footer of sent emails. "Postmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com"
 * Add license to README and PHP file
 
-= v1.0.1 =
-* You can now optionally support Postmark by adding a credit to the bottom of emails. Checks to see if content type is text/html before adding a plain text message to the bottom of emails.
-* Sends Html Body to Postmark as well as Text Body for multipart emails. Multipart sends html with a text version for clients that don’t support html.
-
 = v1.0.0 =
 * First Public release.

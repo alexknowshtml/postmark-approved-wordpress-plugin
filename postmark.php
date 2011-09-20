@@ -8,6 +8,21 @@ Version: 1.0.1
 Author URI: http://www.andydev.co.uk
 Created: 2011-07-05
 Modified: 2011-08-13
+
+Copyright 2011  Andrew Yates & Postmarkapp.com
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License, version 2, as
+published by the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 // Define
@@ -46,7 +61,7 @@ function pm_admin_options() {
 
 		$api_key = $_POST['pm_api_key'];
 		$sender_email = $_POST['pm_sender_address'];
-		
+
 		$pm_poweredby = $_POST['pm_poweredby'];
 		if($pm_poweredby):
 			$pm_poweredby = 1;
@@ -162,25 +177,25 @@ function pm_admin_test_ajax() {
 if(get_option('postmark_enabled') == 1){
 	if (!function_exists("wp_mail")){
 		function wp_mail( $to, $subject, $message, $headers = '', $attachments = array()) {
-		
+
 			// Define Headers
 			$postmark_headers = array(
 				'Accept: application/json',
                 'Content-Type: application/json',
                 'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
 			);
-			
+
 			// If "Support Postmark" is on
 			if(get_option('postmark_poweredby') == 1){
-				// Check Content Type 
+				// Check Content Type
 				if(!strpos($headers, "text/html")){
 					$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
 				}
 			}
-			
+
 			// Send Email
 			if(!is_array($to)){
-				$recipients = implode(",", $to);	
+				$recipients = implode(",", $to);
 			} else {
 				$recipients = $to;
 			}
@@ -192,7 +207,7 @@ if(get_option('postmark_enabled') == 1){
 				$email['From'] = get_option('postmark_sender_address');
 		    	$email['Subject'] = $subject;
 		    	$email['TextBody'] = $message;
-		    	
+
 		    	if(strpos($headers, "text/html")){
 			    	$email['HtmlBody'] = $message;
 		    	}
@@ -214,13 +229,13 @@ function pm_send_test(){
         'Content-Type: application/json',
         'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
 	);
-	
+
 	$message = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
-	
+
 	if(get_option('postmark_poweredby') == 1){
 		$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
 	}
-	
+
 	$email = array();
 	$email['To'] = $email_address;
 	$email['From'] = get_option('postmark_sender_address');
