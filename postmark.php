@@ -4,12 +4,12 @@ Plugin Name: Postmark Approved WordPress Plugin
 Plugin URI: http://www.andydev.co.uk
 Description: Overwrites wp_mail to send emails through Postmark.
 Author: Andrew Yates
-Version: 1.3
+Version: 1.4
 Author URI: http://www.andydev.co.uk
 Created: 2011-07-05
-Modified: 2011-09-20
+Modified: 2012-09-5
 
-Copyright 2011  Andrew Yates & Postmarkapp.com
+Copyright 2011 - 2012  Andrew Yates & Postmarkapp.com
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
@@ -62,6 +62,13 @@ function pm_admin_options() {
 		$api_key = $_POST['pm_api_key'];
 		$sender_email = $_POST['pm_sender_address'];
 
+		$pm_forcehtml = $_POST['pm_forcehtml'];
+		if($pm_forcehtml):
+			$pm_forcehtml = 1;
+		else:
+			$pm_forcehtml = 0;
+		endif;
+
 		$pm_poweredby = $_POST['pm_poweredby'];
 		if($pm_poweredby):
 			$pm_poweredby = 1;
@@ -72,6 +79,7 @@ function pm_admin_options() {
 		update_option('postmark_enabled', $pm_enabled);
 		update_option('postmark_api_key', $api_key);
 		update_option('postmark_sender_address', $sender_email);
+		update_option('postmark_force_html', $pm_forcehtml);
 		update_option('postmark_poweredby', $pm_poweredby);
 
 		$msg_updated = "Postmark settings have been saved.";
@@ -123,6 +131,10 @@ function pm_admin_options() {
 				<tr>
 					<th><label for="pm_sender_address">Sender Email Address</label></th>
 					<td><input name="pm_sender_address" id="" type="text" value="<?php echo get_option('postmark_sender_address'); ?>" class="regular-text"/> <br/><span style="font-size:11px;">This email needs to be one of your <strong>verified sender signatures</strong>. <br/>It will appear as the "from" email on all outbound messages. <a href="https://postmarkapp.com/signatures">Set one up in Postmark</a>.</span></td>
+				</tr>
+				<tr>
+					<th><label for="pm_forcehtml">Force HTML</label></th>
+					<td><input name="pm_forcehtml" id="" type="checkbox" value="1"<?php if(get_option('postmark_force_html') == 1): echo ' checked="checked"'; endif; ?>/> <span style="font-size:11px;">Force all emails to be sent as HTML.</span></td>
 				</tr>
 				<tr>
 					<th><label for="pm_poweredby">Support Postmark</label></th>
@@ -208,7 +220,7 @@ if(get_option('postmark_enabled') == 1){
 		    	$email['Subject'] = $subject;
 		    	$email['TextBody'] = $message;
 
-		    	if(strpos($headers, "text/html")){
+		    	if(strpos($headers, "text/html" ) || get_option('postmark_force_html') == 1){
 			    	$email['HtmlBody'] = $message;
 		    	}
 
@@ -225,22 +237,28 @@ function pm_send_test(){
 
 	// Define Headers
 	$postmark_headers = array(
-		'Accept: application/json',
-        'Content-Type: application/json',
-        'X-Postmark-Server-Token: ' . get_option('postmark_api_key')
+		'Accept' => 'application/json',
+		'Content-Type' => 'application/json',
+        'X-Postmark-Server-Token' => get_option('postmark_api_key')
 	);
 
 	$message = 'This is a test email sent via Postmark from '.get_bloginfo('name').'.';
+	$html_message = 'This is a test email sent via <strong>Postmark</strong> from '.get_bloginfo('name').'.';
 
 	if(get_option('postmark_poweredby') == 1){
 		$message .= "\n\nPostmark solves your WordPress email problems. Send transactional email confidently using http://postmarkapp.com";
+		$html_message .= '<br /><br />Postmark solves your WordPress email problems. Send transactional email confidently using <a href="http://postmarkapp.com">Postmark</a>.';
 	}
-
+	
 	$email = array();
 	$email['To'] = $email_address;
 	$email['From'] = get_option('postmark_sender_address');
     $email['Subject'] = get_bloginfo('name').' Postmark Test';
     $email['TextBody'] = $message;
+    
+    if(get_option('postmark_force_html') == 1){
+    	$email['HtmlBody'] = $html_message;
+	}
 
     $response = pm_send_mail($postmark_headers, $email);
 
@@ -255,22 +273,17 @@ function pm_send_test(){
 
 
 function pm_send_mail($headers, $email){
-	$curl = curl_init();
-    curl_setopt_array($curl, array(
-            CURLOPT_URL => POSTMARK_ENDPOINT,
-            CURLOPT_POST => true,
-            CURLOPT_HTTPHEADER => $headers,
-            CURLOPT_POSTFIELDS => json_encode($email),
-            CURLOPT_RETURNTRANSFER => true
-    ));
+	$args = array(
+		'headers' => $headers,
+		'body' => json_encode($email)
+	);
+	$response = wp_remote_post(POSTMARK_ENDPOINT, $args);
 
-    $response = curl_exec($curl);
-
-    if ($response === false){
-    	return false;
-    } else {
-    	return true;
-    }
+	if($response['response']['code'] == 200) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 ?>
