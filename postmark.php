@@ -272,6 +272,9 @@ function pm_send_mail($headers, $email){
 	);
 	$response = wp_remote_post(POSTMARK_ENDPOINT, $args);
 
+	//to prevent the error : "PHP Fatal error:  Cannot use object of type WP_Error as array" if $response is a WP_Error object
+	if ( is_wp_error( $response ) ) return false;
+
 	if($response['response']['code'] == 200) {
 		return true;
 	} else {
